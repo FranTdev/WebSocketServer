@@ -1,0 +1,32 @@
+# Excluir salidas de compilación locales
+bin/
+obj/
+out/
+publish/
+
+# Excluir scripts de cliente Unity (no requeridos en el contenedor del servidor)
+Assets/
+
+# Excluir bases de datos locales y volumen de datos
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+data/
+
+# Excluir control de versiones y metadatos de IDEs
+.git/
+.gitignore
+.vs/
+.vscode/
+.idea/
+
+# Excluir documentación y logs
+*.md
+*.log
+logs/
+
+# Excluir archivos Docker del contexto
+Dockerfile*
+docker-compose*
+.dockerignore

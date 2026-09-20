@@ -1,0 +1,79 @@
+# ===================================================================
+# .gitignore para Servidor de Videojuegos WebSocket (.NET 10 / C#)
+# ===================================================================
+
+# --- Compilación y Salidas de .NET ---
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+dist/
+
+# --- Cachés y Archivos de Paquetes ---
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+# --- Base de Datos Embebida SQLite (datos locales / persistencia) ---
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# --- Carpeta de Datos Persistentes de Docker ---
+data/
+/data/
+
+# --- Entornos y Secretos ---
+.env
+.env.local
+.env.*.local
+
+# --- Visual Studio ---
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.userprefs
+*.launch
+*.pidb
+*.booproj
+
+# --- Visual Studio Code ---
+.vscode/
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# --- JetBrains Rider / ReSharper ---
+.idea/
+*.DotSettings.user
+_ReSharper*/
+
+# --- Logs y Dumps de Diagnóstico ---
+*.log
+logs/
+*.crash
+*.dmp
+*.dump
+crashdump.dmp
+
+# --- Herramientas de Rendimiento y Testing ---
+BenchmarkDotNet.Artifacts/
+TestResults/
+coverage/
+
+# --- Archivos Ocultos / Basura del Sistema Operativo ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+[Nn]etwork[Tt]rash[Ff]older/
+[Tt]rash/

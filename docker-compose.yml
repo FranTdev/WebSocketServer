@@ -1,0 +1,24 @@
+services:
+  websocket-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: websocket-game-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - LISTENER_PREFIX=http://*:8080/
+      - DATABASE_PATH=/app/data/GameServerData.db
+      - MAX_CONCURRENT_CONNECTIONS=1000
+      - KEEP_ALIVE_SECONDS=30
+    volumes:
+      # Persistencia de la base de datos SQLite WAL en el directorio local ./data
+      - ./data:/app/data
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+        reservations:
+          memory: 64M
