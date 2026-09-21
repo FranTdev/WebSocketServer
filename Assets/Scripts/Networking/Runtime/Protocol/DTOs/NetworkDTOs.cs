@@ -10,19 +10,34 @@ namespace Networking.Runtime.Protocol.DTOs
     public struct Vector3Dto
     {
         /// <summary>
-        /// Componente horizontal X.
+        /// Componente horizontal X (minúscula para Unity).
         /// </summary>
         public float x;
 
         /// <summary>
-        /// Componente vertical Y (altura).
+        /// Componente vertical Y (altura, minúscula para Unity).
         /// </summary>
         public float y;
 
         /// <summary>
-        /// Componente de profundidad Z.
+        /// Componente de profundidad Z (minúscula para Unity).
         /// </summary>
         public float z;
+
+        /// <summary>
+        /// Componente horizontal X alternativo (mayúscula desde servidor .NET).
+        /// </summary>
+        public float X;
+
+        /// <summary>
+        /// Componente vertical Y alternativo (mayúscula desde servidor .NET).
+        /// </summary>
+        public float Y;
+
+        /// <summary>
+        /// Componente de profundidad Z alternativo (mayúscula desde servidor .NET).
+        /// </summary>
+        public float Z;
 
         /// <summary>
         /// Inicializa una nueva instancia de <see cref="Vector3Dto"/>.
@@ -35,6 +50,20 @@ namespace Networking.Runtime.Protocol.DTOs
             this.x = x;
             this.y = y;
             this.z = z;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+        }
+
+        /// <summary>
+        /// Convierte este DTO a un Vector3 nativo de Unity resolviendo diferencias de mayúsculas/minúsculas.
+        /// </summary>
+        public UnityEngine.Vector3 ToVector3()
+        {
+            float posX = x != 0f ? x : X;
+            float posY = y != 0f ? y : Y;
+            float posZ = z != 0f ? z : Z;
+            return new UnityEngine.Vector3(posX, posY, posZ);
         }
 
         /// <summary>

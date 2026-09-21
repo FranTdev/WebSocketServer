@@ -25,6 +25,13 @@ namespace Networking.Runtime.Controllers
         [Tooltip("Conectar automáticamente al iniciar la escena.")]
         [SerializeField] private bool _autoConnectOnStart = false;
 
+        [Header("Autenticación Automática")]
+        [Tooltip("Autenticarse automáticamente tras conectar.")]
+        [SerializeField] private bool _autoAuthenticate = true;
+
+        [Tooltip("Nombre de usuario para inicio de sesión automático. Si se deja 'Player', se le añadirá un sufijo aleatorio único.")]
+        [SerializeField] private string _defaultUsername = "Player";
+
         private IWebSocketClient _client;
         private PacketDispatcher _dispatcher;
 
@@ -32,6 +39,24 @@ namespace Networking.Runtime.Controllers
         /// Instancia Singleton de <see cref="NetworkManager"/>.
         /// </summary>
         public static NetworkManager Instance => _instance;
+
+        /// <summary>
+        /// Indica o establece si se debe autenticar automáticamente tras conectar.
+        /// </summary>
+        public bool AutoAuthenticate
+        {
+            get => _autoAuthenticate;
+            set => _autoAuthenticate = value;
+        }
+
+        /// <summary>
+        /// Nombre de usuario predeterminado.
+        /// </summary>
+        public string DefaultUsername
+        {
+            get => _defaultUsername;
+            set => _defaultUsername = value;
+        }
 
         /// <summary>
         /// Manejador de eventos de autenticación y presencia.
@@ -84,6 +109,7 @@ namespace Networking.Runtime.Controllers
             _instance = this;
             DontDestroyOnLoad(gameObject);
 
+            UnityMainThreadDispatcher.Initialize();
             InitializeNetworkComponents();
         }
 
@@ -92,6 +118,17 @@ namespace Networking.Runtime.Controllers
             if (_autoConnectOnStart)
             {
                 await ConnectAsync();
+
+                if (_autoAuthenticate)
+                {
+                    string username = string.IsNullOrWhiteSpace(_defaultUsername) ? "Player" : _defaultUsername;
+                    if (username == "Player")
+                    {
+                        username += $"_{UnityEngine.Random.Range(100, 999)}";
+                    }
+
+                    await AuthenticateAsync(username, 1);
+                }
             }
         }
 

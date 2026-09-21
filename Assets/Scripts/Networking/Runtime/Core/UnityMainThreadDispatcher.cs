@@ -13,8 +13,19 @@ namespace Networking.Runtime.Core
         private static UnityMainThreadDispatcher _instance;
         private readonly ConcurrentQueue<Action> _executionQueue = new ConcurrentQueue<Action>();
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                var go = new GameObject("UnityMainThreadDispatcher");
+                _instance = go.AddComponent<UnityMainThreadDispatcher>();
+                DontDestroyOnLoad(go);
+            }
+        }
+
         /// <summary>
-        /// Obtiene la instancia singleton activa del despachador, creándola automáticamente en la escena si no existe.
+        /// Obtiene la instancia singleton activa del despachador, garantizando existencia en el hilo principal.
         /// </summary>
         public static UnityMainThreadDispatcher Instance
         {
@@ -22,9 +33,7 @@ namespace Networking.Runtime.Core
             {
                 if (_instance == null)
                 {
-                    var go = new GameObject("UnityMainThreadDispatcher");
-                    _instance = go.AddComponent<UnityMainThreadDispatcher>();
-                    DontDestroyOnLoad(go);
+                    Initialize();
                 }
                 return _instance;
             }

@@ -33,3 +33,16 @@ Este módulo proporciona los componentes `MonoBehaviour` de alto nivel que se a�
   - <font color="#33FF33">**[Moderador]**</font>: Verde
   - <font color="#33CCFF">**[Jugador]**</font>: Cian
 - Efectúa auto-desplazamiento vertical al final de la conversación con cada mensaje nuevo.
+
+### 4. `NetworkPlayerSpawner.cs`
+- Administra el ciclo de vida de instanciación de jugadores remotos y locales.
+- Se suscribe automáticamente a los eventos de `NetworkManager.Instance.Auth`:
+  - `OnUserListSynchronized`: Instancia todos los jugadores remotos que ya estaban conectados en la sala.
+  - `OnUserJoined`: Instancia dinámicamente nuevos jugadores remotos cuando entran.
+  - `OnUserLeft`: Destruye el avatar del jugador que se desconecte.
+  - `OnDisconnected`: Limpia todos los avatares remotos activos para evitar entidades residuales.
+- Asigna automáticamente en tiempo de ejecución al prefab remoto:
+  - `IsLocalPlayer = false`
+  - `RemoteUserId = user.userId`
+- Soporta instanciación automática opcional del jugador local (`spawnLocalPlayerAutomatically = true`).
+

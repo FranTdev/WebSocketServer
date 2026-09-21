@@ -106,7 +106,7 @@ namespace Networking.Runtime.Controllers
                 return;
             }
 
-            _targetRemotePosition = new Vector3(payload.position.x, payload.position.y, payload.position.z);
+            _targetRemotePosition = payload.position.ToVector3();
         }
 
         private void OnDestroy()

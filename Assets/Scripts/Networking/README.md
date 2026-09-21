@@ -17,7 +17,7 @@ Módulo completo, modular y de producción para la integración de red cliente-s
      ws://localhost:8080/
      ```
      *(o la IP local/pública de tu servidor .NET)*.
-   - Activa opcionalmente la casilla **Auto Connect On Start**.
+   - Activa la casilla **Auto Connect On Start** y **Auto Authenticate** (por defecto `true`). Si dejas el nombre en `Player`, el gestor le asignará un sufijo numérico aleatorio único a cada cliente para que se vean entre sí al presionar Play inmediatamente sin necesidad de código adicional.
 
 3. **Sincronización de Jugador (`PlayerNetworkSync`)**:
    - En el prefab de tu jugador local:
@@ -27,9 +27,16 @@ Módulo completo, modular y de producción para la integración de red cliente-s
    - En el prefab de los jugadores remotos:
      - Añade el componente `PlayerNetworkSync.cs`.
      - Desmarca la casilla **Is Local Player** (`false`).
-     - Al instanciarlo mediante el evento `OnUserJoined` o `OnUserListSynchronized`, asigna la propiedad `RemoteUserId`.
 
-4. **Interfaz de Chat (`ChatUIController`)**:
+4. **Instanciador de Jugadores (`NetworkPlayerSpawner`)**:
+   - En la escena, crea o selecciona un GameObject (puede ser el mismo `[NetworkManager]` o un `[PlayerSpawner]`).
+   - Añade el componente `NetworkPlayerSpawner.cs`.
+   - En el inspector:
+     - Asigna **Remote Player Prefab** con el prefab de jugador remoto preparado en el paso anterior.
+     - (Opcional) Asigna **Spawn Parent** para mantener organizada la jerarquía.
+     - (Opcional) Activa **Spawn Local Player Automatically** y asigna **Local Player Prefab** si prefieres que el jugador local se instancie dinámicamente al autenticarse.
+
+5. **Interfaz de Chat (`ChatUIController`)**:
    - En tu Canvas de UI, añade un GameObject con el componente `ChatUIController.cs`.
    - Asigna las referencias en el inspector:
      - `Chat Input Field`: Campo `InputField` para redactar.

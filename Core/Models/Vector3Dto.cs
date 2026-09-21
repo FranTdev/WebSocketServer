@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace WebSocketServer.Core.Models;
 
@@ -10,16 +11,19 @@ public readonly struct Vector3Dto : IEquatable<Vector3Dto>
     /// <summary>
     /// Obtiene el componente en el eje horizontal X.
     /// </summary>
+    [JsonPropertyName("x")]
     public float X { get; }
 
     /// <summary>
     /// Obtiene el componente en el eje vertical Y (altura).
     /// </summary>
+    [JsonPropertyName("y")]
     public float Y { get; }
 
     /// <summary>
     /// Obtiene el componente en el eje de profundidad Z.
     /// </summary>
+    [JsonPropertyName("z")]
     public float Z { get; }
 
     /// <summary>
@@ -28,6 +32,7 @@ public readonly struct Vector3Dto : IEquatable<Vector3Dto>
     /// <param name="x">Componente en el eje X.</param>
     /// <param name="y">Componente en el eje Y.</param>
     /// <param name="z">Componente en el eje Z.</param>
+    [JsonConstructor]
     public Vector3Dto(float x, float y, float z)
     {
         X = x;
